@@ -100,7 +100,7 @@ fn print_help() {
     println!("Videos manager\n");
     // \x1b[1;32m = Bold + Standard Green (Cargo style)
     // \x1b[0m  = Resets all styles
-    println!("\x1b[1;32mUSAGE:\x1b[0m\n    videos-manager [OPTIONS] \n    videos-manager [OPTIONS] <KEY>\n");
+    println!("\x1b[1;32mUSAGE:\x1b[0m\n    video-manager [OPTIONS] \n    video-manager [OPTIONS] <KEY>\n");
 
     println!("\x1b[1;32mOPTIONS:\x1b[0m");
     println!("    -P <PLAYER>   Specify your desired media player");
