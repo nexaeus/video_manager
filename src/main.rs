@@ -28,10 +28,21 @@ fn main() {
         return;
     }
 
-    let _ = run(Params::new(Vec::new(), &env_args[1]));
+    match env_args[1].as_str() {
+        "--help" | "-h" => return print_help(),
+        "-P" => {
+            if env_args.len() <= 3 {
+                println!("Requirements were not satisfied because some parameters were not given!");
+                return;
+            }
+
+            run(Params::new(Vec::new(), &env_args[3]), Some(&env_args[2])).unwrap()
+        },
+        _ => run(Params::new(Vec::new(), &env_args[1]), None).unwrap(),
+    }
 }
 
-fn run(args: Params) -> io::Result<()> {
+fn run(args: Params, player: Option<&String>) -> io::Result<()> {
     let Params { mut store, key } = args;
 
     let _ = files_discovery(
@@ -41,13 +52,18 @@ fn run(args: Params) -> io::Result<()> {
 
     let search_results = search(&filter_files(store, "jpg"), &key);
 
-    println!("Search results for '{key}':\n");
-
-    for (index, item) in search_results.iter().enumerate() {
-        println!("{} - {:?}\n", index+1,item);
+    if search_results.len() == 0 {
+        println!("\x1b[1;32mNo results found for '{key}'\x1b[0m]\n");
+        return Ok(())
+    } else {
+        println!("\x1b[1;32mSearch results for '{key}':\x1b[0m\n");
     }
 
-    println!("Please select a file to open: ");
+    for (index, item) in search_results.iter().enumerate() {
+        println!("    {} - {:?}\n", index+1,item);
+    }
+
+    println!("\x1b[1;32mPlease select a file to open:\x1b[0m");
 
     loop {
         let mut input = String::new();
@@ -61,9 +77,15 @@ fn run(args: Params) -> io::Result<()> {
             },
         };
 
-        let status = Command::new("dragon")
+        let player = if let Some(player) = player {
+            player
+        } else {
+            "dragon"
+        };
+
+        let status = Command::new(player)
             .arg(&search_results[input - 1])
-            .spawn()?
+            .spawn().expect("Error occured when attempting to open file!")
             .wait()?;
 
         println!("Player exited with {status}");
@@ -73,3 +95,15 @@ fn run(args: Params) -> io::Result<()> {
 
     Ok(())
 }
+
+fn print_help() {
+    println!("Videos manager\n");
+    // \x1b[1;32m = Bold + Standard Green (Cargo style)
+    // \x1b[0m  = Resets all styles
+    println!("\x1b[1;32mUSAGE:\x1b[0m\n    videos-manager [OPTIONS] \n    videos-manager [OPTIONS] <KEY>\n");
+
+    println!("\x1b[1;32mOPTIONS:\x1b[0m");
+    println!("    -P <PLAYER>   Specify your desired media player");
+    println!("    -h, --help              Print help information");
+}
+
