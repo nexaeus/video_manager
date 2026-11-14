@@ -22,8 +22,6 @@ pub fn files_discovery(dir: PathBuf, store: &mut Vec<PathBuf>) -> io::Result<()>
         .map(|de| de.map(|e| e.path()))
         .collect::<Result<Vec<_>, _>>()?;
 
-        let result = result.iter();
-
         for path in result {
             files_discovery(path.to_path_buf(), store)?;
         }
@@ -37,7 +35,7 @@ pub fn files_discovery(dir: PathBuf, store: &mut Vec<PathBuf>) -> io::Result<()>
 /// # Filter Files
 /// Remove unsupported file formats.
 pub fn filter_files(list: Vec<PathBuf>, format: &str) -> Vec<PathBuf> {
-    let list = list.iter()
+    let list = list.into_iter()
     .filter(|e| {
         if let Some(val) = e.extension() {
             val != format
@@ -49,4 +47,17 @@ pub fn filter_files(list: Vec<PathBuf>, format: &str) -> Vec<PathBuf> {
     .collect::<Vec<_>>();
 
     list
+}
+
+/// # Search
+/// Traverse the list of discovered files and return those that match a given param.
+pub fn search(list:&Vec<PathBuf>, search_param: &str) -> Vec<PathBuf> {
+    let results = list.iter().filter(|e| e.file_name()
+    .unwrap().to_str().unwrap()
+    .to_lowercase()
+    .contains(&search_param.to_lowercase())
+    ).map(|e| e.to_path_buf())
+    .collect::<Vec<PathBuf>>();
+
+    results
 }
