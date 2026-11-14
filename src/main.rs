@@ -104,6 +104,6 @@ fn print_help() {
 
     println!("\x1b[1;32mOPTIONS:\x1b[0m");
     println!("    -P <PLAYER>   Specify your desired media player");
-    println!("    -h, --help              Print help information");
+    println!("    -h, --help    Print help information");
 }
 
