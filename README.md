@@ -5,7 +5,7 @@ ___
 
 In a terminal window, run the automated installation script:
 ```bash 
-curl -sSL https://gist.githubusercontent.com/nexaeus/f06d9334bee696abef90eb559735c4f8/raw/bb3e8cd2d3be24a0cec51a5f7c72c28219f942ca/install.sh | bash
+curl -sSL https://gist.githubusercontent.com/nexaeus/f06d9334bee696abef90eb559735c4f8/raw/efd9a28bf420902a166be55d6862274faf0b2dfa/install.sh | bash
 ```
 
 ### Usage:
