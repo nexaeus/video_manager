@@ -5,9 +5,13 @@ ___
 
 Clone the video manager repository.
 ```bash 
-git clone <repo_name>
+git clone https://github.com/nexaeus/video_manager.git
+cd video_manager
 ```
-
+Build
+```bash
+cargo build
+```
 Install binaries to your cargo installation dir which is added to PATH.
 ```bash
 cargo install --path .
