@@ -1,6 +1,6 @@
 # Video Manager
-## Built entirely in **Rust** by myself **Nexaeus**.
-___
+**Built entirely in Rust by myself, Nexaeus :)**
+
 ### Installation:
 
 In a terminal window, run the automated installation script:
