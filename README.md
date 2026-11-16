@@ -3,18 +3,9 @@
 ___
 ### Installation:
 
-Clone the video manager repository.
+In a terminal window, run the automated installation script:
 ```bash 
-git clone https://github.com/nexaeus/video_manager.git
-cd video_manager
-```
-Build
-```bash
-cargo build
-```
-Install binaries to your cargo installation dir which is added to PATH.
-```bash
-cargo install --path .
+curl -sSL https://gist.github.com/nexaeus/f06d9334bee696abef90eb559735c4f8 | bash
 ```
 
 ### Usage:
